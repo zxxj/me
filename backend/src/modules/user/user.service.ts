@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './entity/user.entity';
 import { CreateUserDto } from './dto/create-user-dto';
 import * as bcrypt from 'bcrypt';
+import { LoginUserDto } from './dto/login-user-dto';
 
 @Injectable()
 export class UserService {
@@ -32,5 +33,25 @@ export class UserService {
     });
 
     return this.userRepository.save(user);
+  }
+
+  async login(loginUserDto: LoginUserDto) {
+    const { username, password } = loginUserDto;
+
+    const user = await this.userRepository.findOne({
+      where: { username },
+    });
+
+    if (!user) {
+      throw new BadRequestException('用户名不存在!');
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      throw new BadRequestException('密码错误!');
+    }
+
+    return user;
   }
 }
