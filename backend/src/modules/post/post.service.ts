@@ -21,15 +21,15 @@ export class PostService {
   }
 
   async findAll(
-    page = 1,
-    limit = 10,
+    pageNum = 1,
+    pageSize = 10,
   ): Promise<{ posts: Post[]; total: number }> {
     const [posts, total] = await this.postRepository.findAndCount({
       where: { isPublished: true },
       relations: ['author'],
       order: { createdAt: 'DESC' },
-      skip: (page - 1) * limit,
-      take: limit,
+      skip: (pageNum - 1) * pageSize,
+      take: pageSize,
     });
     return { posts, total };
   }

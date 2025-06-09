@@ -36,8 +36,11 @@ export class PostController {
   }
 
   @Get()
-  findAll(@Query('page') page?: number, @Query('limit') limit?: number) {
-    return this.postService.findAll(page, limit);
+  findAll(
+    @Query('pageNum') pageNum?: number,
+    @Query('pageSize') pageSize?: number,
+  ) {
+    return this.postService.findAll(pageNum, pageSize);
   }
 
   @Get(':id')
