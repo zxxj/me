@@ -1,19 +1,20 @@
 import { Layout as AntdLayout } from 'antd';
 import React from 'react';
+import Menu from './Menu';
 
 const { Sider, Header, Content } = AntdLayout;
 
-const Layout = () => {
+const Layout: React.FC = () => {
   return (
     <div className="h-screen flex overflow-hidden">
       {/* 左侧 Sider */}
       <Sider
-        width={300}
+        width={200}
         className="text-white !bg-indigo-700"
         breakpoint="lg"
         collapsedWidth="0"
       >
-        Sider
+        <Menu />
       </Sider>
 
       {/* 右侧主布局：上下结构 */}
