@@ -10,7 +10,7 @@ const Layout: React.FC = () => {
       {/* 左侧 Sider */}
       <Sider
         width={200}
-        className="text-white !bg-indigo-700"
+        className="text-white"
         breakpoint="lg"
         collapsedWidth="0"
       >
@@ -20,7 +20,7 @@ const Layout: React.FC = () => {
       {/* 右侧主布局：上下结构 */}
       <AntdLayout className="flex flex-col flex-1 overflow-hidden">
         {/* 顶部 Header，固定高度 */}
-        <Header className="!bg-indigo-700 shadow px-4 flex items-center h-16 !text-white">
+        <Header className=" shadow px-4 flex items-center h-16 !text-white">
           Header
         </Header>
 

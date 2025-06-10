@@ -5,12 +5,12 @@ const LoginForm = lazy(() => import('./LoginForm'));
 
 const Login: FC = () => {
   return (
-    <div className="w-screen h-screen overflow-hidden">
-      <div className="flex flex-col md:flex-row w-full h-full">
+    <div className="w-screen h-screen">
+      <div className="flex flex-col md:flex-row w-full h-full !overflow-hidden">
         {/* 左侧 */}
         <motion.div
           className="flex-1 bg-violet-700"
-          initial={{ x: -1000, opacity: 0 }}
+          initial={{ x: -1600, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1, ease: 'easeOut' }}
         >
@@ -19,8 +19,8 @@ const Login: FC = () => {
 
         {/* 右侧登录表单 */}
         <motion.div
-          className="w-full px-4 md:w-1/4 md:px-0 flex items-center justify-center	"
-          initial={{ x: 200, opacity: 0 }}
+          className="w-full px-4 md:w-1/3 md:px-0 flex items-center justify-center	"
+          initial={{ x: 1000, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1, ease: 'easeOut' }}
         >

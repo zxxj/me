@@ -55,10 +55,12 @@ const Menu = () => {
   return (
     <>
       <AntMenu
+        className="h-screen"
         items={items}
         mode="inline"
         defaultSelectedKeys={['index']}
         onClick={handleItem}
+        theme={'dark'}
       />
     </>
   );
