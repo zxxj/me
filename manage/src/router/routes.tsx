@@ -1,11 +1,11 @@
 import { lazy } from 'react';
-import type { RouteObject } from 'react-router-dom';
+import { Navigate, type RouteObject } from 'react-router-dom';
 
 const Login = lazy(() => import('@/pages/login/index'));
 const Layout = lazy(() => import('@/layout/index'));
 
 const Dashboard = lazy(() => import('@/pages/dashboard/index'));
-const Publish = lazy(() => import('@/pages/post/publish/index'));
+const List = lazy(() => import('@/pages/post/list/index'));
 const Action = lazy(() => import('@/pages/post/action/index'));
 
 export const routes: RouteObject[] = [
@@ -19,6 +19,12 @@ export const routes: RouteObject[] = [
     element: <Layout />,
     children: [
       {
+        path: '',
+        index: true, // 访问 / 时渲染
+        element: <Navigate to="dashboard" />, // 重定向到 dashboard
+      },
+      {
+        index: true,
         path: 'dashboard',
         element: <Dashboard />,
       },
@@ -26,8 +32,13 @@ export const routes: RouteObject[] = [
         path: 'post',
         children: [
           {
-            path: 'publish',
-            element: <Publish />,
+            path: '',
+            index: true,
+            element: <Navigate to="list" />,
+          },
+          {
+            path: 'list',
+            element: <List />,
           },
           {
             path: 'action',

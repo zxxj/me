@@ -21,8 +21,8 @@ const Menu = () => {
       icon: <FileTextOutlined />,
       children: [
         {
-          label: '发布文章',
-          key: 'publish',
+          label: '文章列表',
+          key: 'list',
         },
         {
           label: '管理文章',
