@@ -3,6 +3,7 @@ import type { LoginFormType } from '@/types/auth';
 import { login } from '@/service/modules/auth';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useUserStore } from '@/store/user/index';
 
 const LoginForm: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -18,6 +19,9 @@ const LoginForm: React.FC = () => {
       const { code, data, message } = await login(values);
 
       if (code === 200 || code === 201) {
+        useUserStore.getState().setToken(data.access_token);
+        useUserStore.getState().setUserInfo(data.user);
+
         await messageApi.success(data.message);
         navigate('/');
       } else {

@@ -19,8 +19,8 @@ interface User {
   avatar: string;
   username: string;
   email: string;
-  provider: string | null;
-  providerId: string | null;
+  provider: string;
+  providerId: number;
   createdAt: Date;
   updatedAt: Date;
 }

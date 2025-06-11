@@ -1,10 +1,5 @@
-
 const Publish: React.FC = () => {
-	return (
-		<>
-			publish
-		</>
-	)
-}
+  return <>publish</>;
+};
 
-export default Publish
+export default Publish;
