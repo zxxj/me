@@ -1,12 +1,14 @@
-import { Menu as AntMenu, MenuItemProps } from 'antd';
+import { Menu as AntMenu, MenuProps } from 'antd';
 import {
   SettingOutlined,
   HomeOutlined,
   FileTextOutlined,
 } from '@ant-design/icons';
-import { MenuItemType } from 'antd/es/menu/interface';
+import { useNavigate } from 'react-router-dom';
 
 const Menu = () => {
+  const navigate = useNavigate();
+
   const items = [
     {
       label: '首页',
@@ -21,6 +23,10 @@ const Menu = () => {
         {
           label: '发布文章',
           key: 'publish',
+        },
+        {
+          label: '管理文章',
+          key: 'action',
         },
       ],
     },
@@ -49,8 +55,15 @@ const Menu = () => {
     },
   ];
 
-  const handleItem = (item: MenuItemType) => {
-    console.log(item);
+  const handleItem: MenuProps['onClick'] = (item) => {
+    const { keyPath } = item;
+
+    // 如果是二级菜单需要拼接
+    if (keyPath.length > 1) {
+      navigate(`/${keyPath[1]}/${keyPath[0]}`);
+    } else {
+      navigate(`/${keyPath[0]}`);
+    }
   };
   return (
     <>

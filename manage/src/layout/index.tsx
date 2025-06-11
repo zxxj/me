@@ -1,6 +1,7 @@
 import { Layout as AntdLayout } from 'antd';
 import React from 'react';
 import Menu from './Menu';
+import { Outlet } from 'react-router-dom';
 
 const { Sider, Header, Content } = AntdLayout;
 
@@ -26,9 +27,7 @@ const Layout: React.FC = () => {
 
         {/* 内容区域：占满剩余高度 + 内部滚动 */}
         <Content className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-indigo-500 scrollbar-track-gray-200">
-          {Array.from({ length: 100 }).map((_, i) => (
-            <div key={i}>content {i + 1}</div>
-          ))}
+          <Outlet />
         </Content>
       </AntdLayout>
     </div>
