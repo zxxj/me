@@ -26,7 +26,7 @@ const Layout: React.FC = () => {
         </Header>
 
         {/* 内容区域：占满剩余高度 + 内部滚动 */}
-        <Content className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-indigo-500 scrollbar-track-gray-200">
+        <Content className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-indigo-500 scrollbar-track-gray-200 overflow-x-hidden">
           <Outlet />
         </Content>
       </AntdLayout>

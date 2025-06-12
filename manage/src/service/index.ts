@@ -1,3 +1,4 @@
+import { useUserStore } from '@/store/user';
 import axios from 'axios';
 import type {
   AxiosInstance,
@@ -12,7 +13,10 @@ export const http: AxiosInstance = axios.create({
 
 http.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    console.log(config);
+    const token = useUserStore.getState().token;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {
