@@ -19,10 +19,10 @@ export class CreatePostDto {
   @MinLength(10)
   content: string;
 
+  @IsNotEmpty()
   @IsString()
-  @IsOptional()
   @MaxLength(500)
-  summary?: string;
+  summary: string;
 
   @IsBoolean()
   @IsOptional()

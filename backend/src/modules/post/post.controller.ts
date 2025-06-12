@@ -26,7 +26,7 @@ interface RequestWithUser extends Request {
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
-  @Post()
+  @Post('create')
   @UseGuards(JwtAuthGuard)
   create(
     @Body() createPostDto: CreatePostDto,
@@ -35,7 +35,7 @@ export class PostController {
     return this.postService.create(createPostDto, req.user.id);
   }
 
-  @Get()
+  @Get('list')
   findAll(
     @Query('pageNum') pageNum?: number,
     @Query('pageSize') pageSize?: number,
