@@ -23,11 +23,11 @@ interface RequestWithUser extends Request {
 }
 
 @Controller('posts')
+@UseGuards(JwtAuthGuard)
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Post('create')
-  @UseGuards(JwtAuthGuard)
   create(
     @Body() createPostDto: CreatePostDto,
     @Request() req: RequestWithUser,
