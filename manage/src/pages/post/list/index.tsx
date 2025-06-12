@@ -1,14 +1,21 @@
 import { Button, Card, Divider } from 'antd';
-import PostTable from './PostTable';
+import PostTable, { PostTableRef } from './PostTable';
 import UseEditor from './Editor';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const PostList: React.FC = () => {
   const [showEditor, setShowEditor] = useState<boolean>(false);
+  const tableRef = useRef<PostTableRef>(null);
 
   const handlePublish = () => {
     setShowEditor(true);
   };
+
+  const handleSuccess = () => {
+    setShowEditor(false);
+    tableRef.current?.fetchData();
+  };
+
   return (
     <>
       <Card></Card>
@@ -20,9 +27,13 @@ const PostList: React.FC = () => {
 
         <Divider />
 
-        <UseEditor visible={showEditor} setVisible={setShowEditor} />
+        <UseEditor
+          visible={showEditor}
+          setVisible={setShowEditor}
+          onSuccess={handleSuccess}
+        />
 
-        <PostTable />
+        <PostTable ref={tableRef} />
       </Card>
     </>
   );

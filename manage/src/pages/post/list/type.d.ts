@@ -1,3 +1,4 @@
+import { User } from '@/types/auth';
 import React from 'react';
 
 // 文章表格columns
@@ -10,8 +11,7 @@ export interface TableColumns {
   likeCount: string;
   commentCount: string;
   isPublished: boolean;
-  author: number;
-  authorId: number;
+  author: User;
   createdAt: Date;
   updatedAt: Date;
 }

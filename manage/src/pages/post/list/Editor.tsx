@@ -7,18 +7,24 @@ import {
 } from '@wangeditor-next/editor';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Form, Input, Modal } from 'antd';
+import { Form, Input, message, Modal } from 'antd';
 import type { CreatePost } from './type';
 import { create } from '@/service/modules/post';
 
 interface UseEditorType {
   visible: boolean;
   setVisible: (visible: boolean) => void;
+  onSuccess: () => void;
 }
 
-const UseEditor: React.FC<UseEditorType> = ({ visible, setVisible }) => {
+const UseEditor: React.FC<UseEditorType> = ({
+  visible,
+  setVisible,
+  onSuccess,
+}) => {
+  const [messageApi, contextHolder] = message.useMessage();
   const [editor, setEditor] = useState<IDomEditor | null>(null);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm<CreatePost>();
 
   // 编辑器内容
@@ -42,53 +48,62 @@ const UseEditor: React.FC<UseEditorType> = ({ visible, setVisible }) => {
   }, [editor]);
 
   const handleOk = async () => {
+    setIsLoading(true);
     try {
       const values = await form.validateFields();
       values.content = html;
-      console.log(values);
-      const res = await create(values);
-      console.log(res);
-      // setVisible(false);
+      const { data } = await create(values);
+      onSuccess?.();
+      setVisible(false);
+      await messageApi.success(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleCancel = () => {
     setVisible(false);
+    setHtml('<p></p>');
+    form.resetFields();
   };
 
   return (
     <>
+      {contextHolder}
       <Modal
         className=" overflow-hidden"
         title="Basic Modal"
         closable
-        maskClosable
         destroyOnHidden
+        maskClosable
         open={visible}
         onOk={handleOk}
         onCancel={handleCancel}
         width={{
-          xxl: '80%',
+          xxl: '70%',
         }}
+        confirmLoading={isLoading}
       >
-        <Form<CreatePost> form={form} layout="vertical">
-          <Form.Item
-            label="文章标题"
-            name="title"
-            rules={[{ required: true, message: '请输入文章标题!' }]}
-          >
-            <Input />
-          </Form.Item>
+        <Form<CreatePost> form={form} layout="inline">
+          <div className="flex flex-col gap-2 w-full mb-4">
+            <Form.Item
+              label="文章标题"
+              name="title"
+              rules={[{ required: true, message: '请输入文章标题!' }]}
+            >
+              <Input />
+            </Form.Item>
 
-          <Form.Item
-            label="文章概要"
-            name="summary"
-            rules={[{ required: true, message: '请输入文章概要!' }]}
-          >
-            <Input.TextArea />
-          </Form.Item>
+            <Form.Item
+              label="文章概要"
+              name="summary"
+              rules={[{ required: true, message: '请输入文章概要!' }]}
+            >
+              <Input.TextArea />
+            </Form.Item>
+          </div>
         </Form>
         <motion.div
           style={{ border: '1px solid #ccc', zIndex: 100 }}
@@ -125,7 +140,7 @@ const UseEditor: React.FC<UseEditorType> = ({ visible, setVisible }) => {
             onCreated={setEditor}
             onChange={(editor) => setHtml(editor.getHtml())}
             mode="default"
-            style={{ height: '500px', overflowY: 'hidden' }}
+            style={{ height: '400px', overflowY: 'hidden' }}
           />
         </motion.div>
       </Modal>
