@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { PostVo } from './dto/list-auth.dto';
 
 @Injectable()
 export class PostService {
@@ -24,7 +25,7 @@ export class PostService {
   async findAll(
     pageNum = 1,
     pageSize = 10,
-  ): Promise<{ posts: Post[]; total: number }> {
+  ): Promise<{ posts: PostVo[]; total: number }> {
     const [posts, total] = await this.postRepository.findAndCount({
       where: { isPublished: true },
       relations: ['author'],
@@ -32,10 +33,30 @@ export class PostService {
       skip: (pageNum - 1) * pageSize,
       take: pageSize,
     });
-    return { posts, total };
+
+    const vo = posts.map((post) => ({
+      id: post.id,
+      author_id: post.author_id,
+      title: post.title,
+      summary: post.summary,
+      content: post.content,
+      commentCount: post.commentCount,
+      likeCount: post.likeCount,
+      viewCount: post.viewCount,
+      isPublished: post.isPublished,
+      author: {
+        username: post.author.username,
+        email: post.author.email,
+        avatar: post.author.avatar,
+      },
+      createdAt: post.createdAt,
+      updatedAt: post.updatedAt,
+    }));
+
+    return { posts: vo, total };
   }
 
-  async findOne(id: number): Promise<Post> {
+  async findOne(id: number): Promise<PostVo> {
     const post = await this.postRepository.findOne({
       where: { id },
       relations: ['author'],
@@ -43,27 +64,53 @@ export class PostService {
     if (!post) {
       throw new NotFoundException(`文章 ID ${id} 不存在`);
     }
-    return post;
+
+    const vo = {
+      id: post.id,
+      author_id: post.author_id,
+      title: post.title,
+      summary: post.summary,
+      content: post.content,
+      commentCount: post.commentCount,
+      likeCount: post.likeCount,
+      viewCount: post.viewCount,
+      isPublished: post.isPublished,
+      author: {
+        username: post.author.username,
+        email: post.author.email,
+        avatar: post.author.avatar,
+      },
+      createdAt: post.createdAt,
+      updatedAt: post.updatedAt,
+    };
+
+    return vo;
   }
 
   async update(
     id: number,
     updatePostDto: UpdatePostDto,
     authorId: number,
-  ): Promise<Post> {
+  ): Promise<string> {
     const post = await this.findOne(id);
     if (post.author_id !== authorId) {
       throw new NotFoundException('您没有权限修改此文章');
     }
     Object.assign(post, updatePostDto);
-    return this.postRepository.save(post);
+    await this.postRepository.save(post);
+    return '文章更新成功';
   }
 
   async remove(id: number, authorId: number): Promise<void> {
-    const post = await this.findOne(id);
-    if (post.author_id !== authorId) {
-      throw new NotFoundException('您没有权限删除此文章');
+    const post = await this.postRepository.findOne({
+      where: { id },
+      relations: ['author'],
+    });
+
+    if (!post || post.author.id !== authorId) {
+      throw new NotFoundException('您没有权限删除此文章!');
     }
+
     await this.postRepository.remove(post);
   }
 
