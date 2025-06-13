@@ -8,16 +8,18 @@ import {
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Form, Input, message, Modal } from 'antd';
-import type { CreatePost } from './type';
-import { create } from '@/service/modules/post';
+import type { CreatePost, PostItem } from './type';
+import { create, update } from '@/service/modules/post';
 
 interface UseEditorType {
   visible: boolean;
+  editData: PostItem | null;
   setVisible: (visible: boolean) => void;
   onSuccess: () => void;
 }
 
 const UseEditor: React.FC<UseEditorType> = ({
+  editData,
   visible,
   setVisible,
   onSuccess,
@@ -38,24 +40,22 @@ const UseEditor: React.FC<UseEditorType> = ({
     placeholder: '请输入内容...',
   };
 
-  // 及时销毁 editor ，重要！
-  useEffect(() => {
-    return () => {
-      if (editor == null) return;
-      editor.destroy();
-      setEditor(null);
-    };
-  }, [editor]);
-
   const handleOk = async () => {
     setIsLoading(true);
+
     try {
       const values = await form.validateFields();
       values.content = html;
-      const { data } = await create(values);
+      if (editData) {
+        console.log(editData);
+        const { data } = await update(editData.id, values);
+        await messageApi.success(data);
+      } else {
+        const { data } = await create(values);
+        await messageApi.success(data);
+      }
       onSuccess?.();
       setVisible(false);
-      await messageApi.success(data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -68,6 +68,23 @@ const UseEditor: React.FC<UseEditorType> = ({
     setHtml('<p></p>');
     form.resetFields();
   };
+
+  // 及时销毁 editor ，重要！
+  useEffect(() => {
+    return () => {
+      if (editor == null) return;
+      editor.destroy();
+      setEditor(null);
+    };
+  }, [editor]);
+
+  useEffect(() => {
+    if (editData) {
+      setHtml(editData.content);
+      console.log(editData);
+      form.setFieldsValue({ ...editData });
+    }
+  }, [editData]);
 
   return (
     <>

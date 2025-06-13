@@ -2,10 +2,12 @@ import { Button, Card, Divider } from 'antd';
 import PostTable, { PostTableRef } from './PostTable';
 import UseEditor from './Editor';
 import { useRef, useState } from 'react';
+import { PostItem } from './type';
 
 const PostList: React.FC = () => {
   const [showEditor, setShowEditor] = useState<boolean>(false);
   const tableRef = useRef<PostTableRef>(null);
+  const [editData, setEditData] = useState<PostItem | null>(null);
 
   const handlePublish = () => {
     setShowEditor(true);
@@ -28,12 +30,18 @@ const PostList: React.FC = () => {
         <Divider />
 
         <UseEditor
+          editData={editData ?? null}
           visible={showEditor}
           setVisible={setShowEditor}
           onSuccess={handleSuccess}
         />
 
-        <PostTable ref={tableRef} />
+        <PostTable
+          ref={tableRef}
+          onSuccess={handleSuccess}
+          setVisible={setShowEditor}
+          setEditData={setEditData}
+        />
       </Card>
     </>
   );
