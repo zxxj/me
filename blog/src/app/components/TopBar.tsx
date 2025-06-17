@@ -20,7 +20,7 @@ const TopBar: FC = () => {
     animate: {
       opacity: 1,
       x: 0,
-      transition: { type: 'spring', stiffness: 300, delay: 1 },
+      transition: { type: 'spring', stiffness: 300, delay: 0.5 },
     },
     hover: {
       scale: 1.2,
@@ -37,7 +37,7 @@ const TopBar: FC = () => {
         <motion.div
           initial={{ opacity: 0, x: -70 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1, type: 'spring', stiffness: 300 }}
+          transition={{ delay: 0.5, type: 'spring', stiffness: 300 }}
           className="text-xl font-bold cursor-default"
         >
           Zhang Xinxin

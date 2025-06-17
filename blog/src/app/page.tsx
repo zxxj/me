@@ -1,20 +1,23 @@
 'use client';
 
 import { FC } from 'react';
-import { delay, motion } from 'framer-motion';
+import { delay, motion, Variants } from 'framer-motion';
 
 // 动画配置
 const containerVariants = {
-  hidden: { opacity: 0, y: 100 },
+  hidden: {
+    opacity: 0,
+    y: 100,
+  },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 1,
+      duration: 0.7,
       ease: 'easeInOut',
       when: 'beforeChildren',
       staggerChildren: 0.05, // 每个子元素延迟进入
-      delay: 1.5,
+      delay: 0.8,
     },
   },
 };
@@ -22,7 +25,7 @@ const containerVariants = {
 const Home: FC = () => {
   return (
     <motion.div
-      variants={containerVariants}
+      variants={containerVariants as Variants}
       initial="hidden"
       animate="visible"
       className="border text-white bg-zinc-900 overflow-y-auto opacity-90 max-h-[80vh] w-11/12 m-auto shadow-lg shadow-white rounded-2xl p-4 space-y-2 xl:w-full"
