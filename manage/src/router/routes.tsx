@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { Navigate, type RouteObject } from 'react-router-dom';
+import { withRoute } from './authRoute';
 
 const Login = lazy(() => import('@/pages/login/index'));
 const Layout = lazy(() => import('@/layout/index'));
@@ -26,7 +27,7 @@ export const routes: RouteObject[] = [
       {
         index: true,
         path: 'dashboard',
-        element: <Dashboard />,
+        element: withRoute(<Dashboard />),
       },
       {
         path: 'post',
@@ -34,15 +35,15 @@ export const routes: RouteObject[] = [
           {
             path: '',
             index: true,
-            element: <Navigate to="list" />,
+            element: withRoute(<Navigate to="list" />),
           },
           {
             path: 'list',
-            element: <PostList />,
+            element: withRoute(<PostList />),
           },
           {
             path: 'action',
-            element: <Action />,
+            element: withRoute(<Action />),
           },
         ],
       },
