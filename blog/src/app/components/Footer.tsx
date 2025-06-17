@@ -1,10 +1,24 @@
+'use client';
+
 import { FC } from 'react';
+import { motion } from 'framer-motion';
 
 const Footer: FC = () => {
   return (
-    <footer className="text-white mt-5 text-center">
+    <motion.footer
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.8,
+        ease: 'easeOut',
+        type: 'spring',
+        stiffness: 100,
+        damping: 15,
+      }}
+      className="text-white mt-5 text-center"
+    >
       <div>备案信息</div>
-    </footer>
+    </motion.footer>
   );
 };
 
