@@ -14,6 +14,7 @@ import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Public } from 'src/common/decorator/public';
 
 interface RequestWithUser extends Request {
   user: {
@@ -35,6 +36,7 @@ export class PostController {
     return this.postService.create(createPostDto, req.user.id);
   }
 
+  @Public()
   @Get('list')
   findAll(
     @Query('pageNum') pageNum?: number,
@@ -43,6 +45,7 @@ export class PostController {
     return this.postService.findAll(pageNum, pageSize);
   }
 
+  @Public()
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const post = await this.postService.findOne(+id);

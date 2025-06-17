@@ -19,7 +19,7 @@ async function bootstrap() {
   );
 
   app.useGlobalInterceptors(new TransformInterceptor());
-  app.useGlobalGuards(new JwtAuthGuard());
+  app.useGlobalGuards(app.get(JwtAuthGuard));
 
   app.useGlobalFilters(new HttpExceptionFilter());
 
