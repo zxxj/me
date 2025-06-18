@@ -12,8 +12,8 @@ const Footer: FC = () => {
         duration: 0.8,
         ease: 'easeOut',
         type: 'spring',
-        stiffness: 100,
-        damping: 15,
+        stiffness: 200,
+        delay: 2,
       }}
       className="text-white mt-5 text-center"
     >

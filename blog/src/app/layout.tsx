@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import TopBar from './components/TopBar';
-import Footer from './components/Footer';
+import { ThemeProvider } from '@/components/theme-provider';
+import ThemeWrapper from './components/ThemeWrapper';
 
 export const metadata: Metadata = {
   title: 'xinxin',
@@ -14,13 +14,24 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="en" className="w-screen h-screen overflow-hidden trancy-zh-CN">
-      <body className="w-full h-full bg-[url('/bg.png')] bg-cover">
-        <div className="md:w-9/12 m-auto h-full shadow-lg ">
-          <TopBar />
-          {children}
-          <Footer />
-        </div>
+    <html
+      lang="cn"
+      className="w-screen h-screen overflow-hidden trancy-zh-CN"
+      suppressHydrationWarning
+    >
+      <body className="w-full h-full bg-cover bg-[url('/bg-light.png')] dark:bg-[url('/bg-dark.png')]">
+        {/* 暗黑主题 */}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange={false}
+        >
+          {/* 初始加载动画 */}
+          <ThemeWrapper>
+            <div className="md:w-9/12 m-auto h-full ">{children}</div>
+          </ThemeWrapper>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -6,11 +6,40 @@ import {
   SpeakerWaveIcon,
   Bars3Icon,
   XMarkIcon,
+  SunIcon,
 } from '@heroicons/react/24/solid';
 import { FC, useState } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { useTheme } from 'next-themes';
+import {
+  Github,
+  HomeIcon,
+  LanguagesIcon,
+  PawPrintIcon,
+  Shapes,
+  ShapesIcon,
+  SquareUserRoundIcon,
+} from 'lucide-react';
 
-const categories = ['首页', '文章分类', '作品集', '关于我'];
+const categories = [
+  {
+    icon: <HomeIcon />,
+    name: '首页',
+  },
+  {
+    icon: <ShapesIcon />,
+    name: '文章分类',
+  },
+  {
+    icon: <PawPrintIcon />,
+    name: '作品集',
+  },
+  {
+    icon: <SquareUserRoundIcon />,
+    name: '关于我',
+  },
+];
 
 const TopBar: FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -20,7 +49,7 @@ const TopBar: FC = () => {
     animate: {
       opacity: 1,
       x: 0,
-      transition: { type: 'spring', stiffness: 300, delay: 0.5 },
+      transition: { type: 'spring', stiffness: 300, delay: 1 },
     },
     hover: {
       scale: 1.2,
@@ -30,50 +59,126 @@ const TopBar: FC = () => {
     tap: { scale: 0.9 },
   };
 
+  const { setTheme, theme } = useTheme();
+
+  const handleClick = (v: string) => {
+    if (v === 'theme') theme === 'dark' ? setTheme('light') : setTheme('dark');
+    if (v === 'github') window.open('https://github.com/zxxj', '_blank');
+  };
   return (
-    <header className="relative text-white mt-5 my-8">
+    <header className="relative dark:text-white mt-5 my-8">
       {/* 顶部栏 */}
       <div className="flex items-center justify-between px-4 h-14">
         <motion.div
           initial={{ opacity: 0, x: -70 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.5, type: 'spring', stiffness: 300 }}
-          className="text-xl font-bold cursor-default"
+          transition={{ delay: 1, type: 'spring', stiffness: 300 }}
+          className="text-lg font-bold cursor-pointer"
         >
           Zhang Xinxin
         </motion.div>
 
         {/* 大屏菜单 */}
         <ul className="hidden md:flex gap-12 text-sm font-semibold">
-          {categories.map((item, idx) => (
+          {categories.map((item) => (
             <motion.li
-              key={item}
-              whileHover={{ scale: 1.1, color: '#3b82f6' }}
-              initial={{ opacity: 0, y: 10 }}
+              key={item.name}
+              whileHover={{ scale: 1.1 }}
+              initial={{ opacity: 0, y: -200 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ type: 'spring', stiffness: 300, delay: 0.1 * idx }}
+              transition={{
+                type: 'spring',
+                stiffness: 200,
+              }}
               className="cursor-pointer"
             >
-              {item}
+              <Button variant="ghost">
+                {item.icon}
+                {item.name}
+              </Button>
             </motion.li>
           ))}
         </ul>
 
         {/* 图标栏 */}
         <div className="flex items-center md:gap-6 gap-4">
-          {[MagnifyingGlassIcon, MoonIcon, SpeakerWaveIcon].map((Icon, idx) => (
-            <motion.div
-              key={idx}
-              variants={iconVariants as Variants}
-              initial="initial"
-              animate="animate"
-              whileHover="hover"
-              whileTap="tap"
-              className="cursor-pointer text-white"
-            >
-              <Icon className="w-5 h-5" />
-            </motion.div>
-          ))}
+          <motion.div
+            variants={iconVariants as Variants}
+            initial="initial"
+            animate="animate"
+            whileHover="hover"
+            whileTap="tap"
+            className="cursor-pointer "
+          >
+            <LanguagesIcon
+              className="w-5 h-5 dark:text-white text-black"
+              onClick={() => handleClick('lang')}
+            />
+          </motion.div>
+
+          <motion.div
+            variants={iconVariants as Variants}
+            initial="initial"
+            animate="animate"
+            whileHover="hover"
+            whileTap="tap"
+            className="cursor-pointer "
+          >
+            <MagnifyingGlassIcon
+              className="w-5 h-5 dark:text-white text-black"
+              onClick={() => handleClick('search')}
+            />
+          </motion.div>
+
+          <motion.div
+            variants={iconVariants as Variants}
+            initial="initial"
+            animate="animate"
+            whileHover="hover"
+            whileTap="tap"
+            className="cursor-pointer "
+          >
+            <SpeakerWaveIcon
+              className="w-5 h-5 dark:text-white text-black"
+              onClick={() => handleClick('music')}
+            />
+          </motion.div>
+
+          <motion.div
+            variants={iconVariants as Variants}
+            initial="initial"
+            animate="animate"
+            whileHover="hover"
+            whileTap="tap"
+            className="cursor-pointer dark:text-white text-black"
+          >
+            {theme === 'dark' ? (
+              <SunIcon
+                className="w-5 h-5  dark:text-white text-black"
+                onClick={() => handleClick('theme')}
+              />
+            ) : (
+              <MoonIcon
+                className="w-5 h-5  dark:text-white text-black"
+                onClick={() => handleClick('theme')}
+              />
+            )}
+          </motion.div>
+
+          <motion.div
+            variants={iconVariants as Variants}
+            initial="initial"
+            animate="animate"
+            whileHover="hover"
+            whileTap="tap"
+            className="cursor-pointer "
+          >
+            <Github
+              className="w-5 h-5 dark:text-white text-black"
+              onClick={() => handleClick('github')}
+            />
+          </motion.div>
+
           <button
             className="md:hidden"
             onClick={() => setMenuOpen((prev) => !prev)}
@@ -104,19 +209,20 @@ const TopBar: FC = () => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="md:hidden bg-black overflow-hidden"
+            className="md:hidden bg-white dark:bg-black dark:text-white  overflow-hidden"
           >
             <ul className="flex flex-col items-center gap-4 py-4">
               {categories.map((item, idx) => (
                 <motion.li
-                  key={item}
+                  key={item.name}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.05 * idx }}
-                  className="text-sm font-semibold hover:text-blue-500 cursor-pointer"
+                  className="text-sm font-semibold  cursor-pointer flex items-center"
                   onClick={() => setMenuOpen(false)}
                 >
-                  {item}
+                  <div className="mr-1">{item.icon}</div>
+                  {item.name}
                 </motion.li>
               ))}
             </ul>
