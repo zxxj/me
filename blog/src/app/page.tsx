@@ -28,7 +28,7 @@ const Index: FC = () => {
       variants={containerVariants as Variants}
       initial="hidden"
       animate="visible"
-      className="border dark:text-white dark:bg-zinc-900 overflow-y-auto opacity-90 max-h-[80vh] w-11/12 m-auto shadow-md shadow-black  dark:shadow-white rounded-2xl p-4 space-y-2 xl:w-full"
+      className="border dark:text-white dark:bg-zinc-900 overflow-y-auto opacity-90 h-[67vh] lg:h-[80vh] w-11/12 m-auto shadow-md shadow-black  dark:shadow-white rounded-2xl p-4 space-y-2 xl:w-full"
     >
       {[...Array(40)].map((_, i) => (
         <motion.div
