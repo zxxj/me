@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
-import ThemeWrapper from './components/ThemeWrapper';
+import ThemeWrapper from './layout/components/ThemeWrapper';
 
 export const metadata: Metadata = {
   title: 'xinxin',

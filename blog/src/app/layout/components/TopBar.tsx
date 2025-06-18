@@ -12,38 +12,15 @@ import { FC, useState } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
-import {
-  Github,
-  HomeIcon,
-  LanguagesIcon,
-  PawPrintIcon,
-  Shapes,
-  ShapesIcon,
-  SquareUserRoundIcon,
-} from 'lucide-react';
-
-const categories = [
-  {
-    icon: <HomeIcon />,
-    name: '首页',
-  },
-  {
-    icon: <ShapesIcon />,
-    name: '文章分类',
-  },
-  {
-    icon: <PawPrintIcon />,
-    name: '作品集',
-  },
-  {
-    icon: <SquareUserRoundIcon />,
-    name: '关于我',
-  },
-];
+import { Github, LanguagesIcon } from 'lucide-react';
+import { categories } from '@/data/topBar';
+import { usePathname } from 'next/navigation';
 
 const TopBar: FC = () => {
+  // 移动端菜单状态
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // 图标动画
   const iconVariants = {
     initial: { opacity: 0, x: 100 },
     animate: {
@@ -59,12 +36,16 @@ const TopBar: FC = () => {
     tap: { scale: 0.9 },
   };
 
+  // 主题配置
   const { setTheme, theme } = useTheme();
+
+  const pathName = usePathname();
 
   const handleClick = (v: string) => {
     if (v === 'theme') theme === 'dark' ? setTheme('light') : setTheme('dark');
     if (v === 'github') window.open('https://github.com/zxxj', '_blank');
   };
+
   return (
     <header className="relative dark:text-white mt-5 my-8">
       {/* 顶部栏 */}
@@ -80,24 +61,27 @@ const TopBar: FC = () => {
 
         {/* 大屏菜单 */}
         <ul className="hidden md:flex gap-12 text-sm font-semibold">
-          {categories.map((item) => (
-            <motion.li
-              key={item.name}
-              whileHover={{ scale: 1.1 }}
-              initial={{ opacity: 0, y: -200 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                type: 'spring',
-                stiffness: 200,
-              }}
-              className="cursor-pointer"
-            >
-              <Button variant="ghost">
-                {item.icon}
-                {item.name}
-              </Button>
-            </motion.li>
-          ))}
+          {categories.map((item) => {
+            const isActive = pathName === item.path;
+            return (
+              <motion.li
+                key={item.name}
+                whileHover={{ scale: 1.1 }}
+                initial={{ opacity: 0, y: -200 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 200,
+                }}
+                className="cursor-pointer"
+              >
+                <Button variant="ghost" className={isActive ? 'underline' : ''}>
+                  {item.icon}
+                  {item.name}
+                </Button>
+              </motion.li>
+            );
+          })}
         </ul>
 
         {/* 图标栏 */}
@@ -200,7 +184,7 @@ const TopBar: FC = () => {
         </div>
       </div>
 
-      {/* 下拉菜单（小屏幕） */}
+      {/* 移动端菜单 */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div

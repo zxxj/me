@@ -22,7 +22,7 @@ const containerVariants = {
   },
 };
 
-const Home: FC = () => {
+const Index: FC = () => {
   return (
     <motion.div
       variants={containerVariants as Variants}
@@ -42,4 +42,4 @@ const Home: FC = () => {
   );
 };
 
-export default Home;
+export default Index;
