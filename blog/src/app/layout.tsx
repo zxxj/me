@@ -29,7 +29,7 @@ const RootLayout = ({
         >
           {/* 初始加载动画 */}
           <ThemeWrapper>
-            <div className="w-full m-auto h-[67vh] lg:h-[80vh] ">
+            <div className="w-full m-auto h-[67vh] lg:h-[80vh] pt-28">
               {children}
             </div>
           </ThemeWrapper>

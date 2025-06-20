@@ -9,13 +9,13 @@ const Footer: FC = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        duration: 0.8,
+        duration: 0.5,
         ease: 'easeOut',
         type: 'spring',
-        stiffness: 200,
+        stiffness: 50,
         delay: 2,
       }}
-      className="text-white mt-5 text-center"
+      className="dark:text-white text-black mt-32 text-center"
     >
       <div>备案信息</div>
     </motion.footer>
