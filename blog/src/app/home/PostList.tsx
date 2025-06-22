@@ -40,7 +40,7 @@ const PostList: FC<Props> = ({ data }) => {
           key={i}
           className="p-3 dark:bg-zinc-800 rounded-md dark:hover:bg-zinc-700 transition"
         >
-          内容 {i + 1}
+          文章 {i + 1}
         </motion.div>
       ))}
     </motion.div>
