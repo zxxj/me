@@ -1,8 +1,13 @@
 import { getPostList } from '@/app/service/modules/index';
 import Wrapper from './Wrapper';
+import { Suspense } from 'react';
 
 export default async function ProjectsPage() {
   await new Promise((res) => setTimeout(res, 3000));
 
-  return <Wrapper />;
+  return (
+    <Suspense>
+      <Wrapper />
+    </Suspense>
+  );
 }

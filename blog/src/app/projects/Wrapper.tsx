@@ -42,6 +42,9 @@ const Wrapper: FC = () => {
     {
       cover: '/projects/车.png',
     },
+    {
+      cover: '/projects/xinDesign.png',
+    },
   ];
   return (
     <motion.div
