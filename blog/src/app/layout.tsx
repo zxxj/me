@@ -23,7 +23,7 @@ const RootLayout = ({
         {/* 暗黑主题 */}
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange={false}
         >
