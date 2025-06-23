@@ -64,7 +64,13 @@ const TopBar: FC = () => {
           className="text-lg font-bold cursor-pointer"
           onClick={() => router.push('/home')}
         >
-          Zhang Xinxin
+          <video
+            src="/zhangxinxin.mp4"
+            autoPlay
+            loop
+            muted
+            className="w-[220px] h-[90px] mt-5"
+          />
         </motion.div>
 
         {/* 大屏菜单 */}
