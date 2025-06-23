@@ -1,4 +1,4 @@
-import { getPostList } from '@/app/service/modules/index';
+import { getPostList } from '@/app/service/modules/post/index';
 import Wrapper from './Wrapper';
 import { Suspense } from 'react';
 

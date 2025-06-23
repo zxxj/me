@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import ThemeWrapper from './layout/components/ThemeWrapper';
+import { Toaster } from '@/components/ui/sonner';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,6 +34,7 @@ const RootLayout = ({
           <ThemeWrapper>
             <div className="w-full m-auto h-[67vh] lg:h-[80vh] pt-28">
               {children}
+              <Toaster position="bottom-center" />
             </div>
           </ThemeWrapper>
         </ThemeProvider>
