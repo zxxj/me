@@ -6,16 +6,20 @@ const letters = ['x', 'i', 'n'];
 
 export default function XinHandLoading() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-white dark:bg-black select-none">
+    <div className="flex flex-col items-center justify-center h-screen  bg-transparent select-none">
       {/* “xin” 字母 */}
       <motion.div
+        initial={{ opacity: 0 }}
         animate={{
           y: [0, -15, 0],
+          opacity: 1,
         }}
         transition={{
           repeat: Infinity,
+          repeatType: 'mirror', // 关键
           duration: 2,
           ease: 'easeInOut',
+          delay: 0.5,
         }}
         className="flex space-x-8 text-8xl font-bold text-black dark:text-white"
       >
@@ -26,12 +30,15 @@ export default function XinHandLoading() {
 
       {/* 手掌 SVG 托举 */}
       <motion.div
+        initial={{ opacity: 0 }}
         animate={{
           scale: [1, 1.1, 1],
           y: [0, 5, 0],
+          opacity: 1,
         }}
         transition={{
           repeat: Infinity,
+          repeatType: 'mirror', // 关键
           duration: 2,
           ease: 'easeInOut',
           delay: 0.5,

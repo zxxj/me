@@ -1,5 +1,13 @@
-const Index = () => {
-  return <>projects</>;
-};
+import { getPostList } from '@/app/service/modules/index';
+import Wrapper from './Wrapper';
+import { Suspense } from 'react';
 
-export default Index;
+export default async function ProjectsPage() {
+  await new Promise((res) => setTimeout(res, 3000));
+
+  return (
+    <Suspense>
+      <Wrapper />
+    </Suspense>
+  );
+}

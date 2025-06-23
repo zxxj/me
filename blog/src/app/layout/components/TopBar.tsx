@@ -220,7 +220,7 @@ const TopBar: FC = () => {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="md:hidden bg-white dark:bg-black dark:text-white  overflow-hidden"
           >
-            <ul className="flex flex-col items-center gap-4 py-4">
+            <ul className="flex flex-col items-center gap-4 py-4 relative z-[9999]">
               {categories.map((item, idx) => (
                 <motion.li
                   key={item.name}

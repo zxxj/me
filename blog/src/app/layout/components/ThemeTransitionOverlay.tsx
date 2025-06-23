@@ -17,7 +17,7 @@ const ThemeTransitionOverlay = () => {
     <motion.div
       className="fixed inset-0 z-[9999] pointer-events-none dark:border-e-gray-950 bg-amber-50 bg-cover bg-center bg-no-repeat	 bg-origin-border	"
       initial={{ clipPath: 'circle(0% at 50% 50%)', opacity: 0 }}
-      animate={{ clipPath: 'circle(150% at 50% 50%)', opacity: 0.7 }}
+      animate={{ clipPath: 'circle(150% at 50% 50%)', opacity: 1 }}
       transition={{ duration: 1.5, ease: 'easeInOut' }}
       style={{
         backgroundImage: `url(/bg5.jpg)`,
