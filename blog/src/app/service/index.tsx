@@ -24,6 +24,7 @@ http.interceptors.response.use(
       return Promise.reject(new Error(res.message || 'Error'));
     }
 
+    console.log(res);
     return res.data;
   },
   (error) => {

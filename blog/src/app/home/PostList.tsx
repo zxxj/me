@@ -57,8 +57,13 @@ const PostList: FC<Props> = ({ data }) => {
               dark:border-b-gray-700
             "
           >
-            <img
+            {/* <img
               src={`http://localhost:9000/${item.cover.replaceAll('\\', '/')}`}
+              className="w-full h-32 lg:h-20 rounded-md lg:w-40"
+            /> */}
+            {/* 测试 */}
+            <img
+              src={`${item.cover}`}
               className="w-full h-32 lg:h-20 rounded-md lg:w-40"
             />
             <div className="lg:ml-4 mt-2 lg:mt-0 lg:flex lg:flex-col justify-between">
