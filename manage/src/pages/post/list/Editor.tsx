@@ -7,9 +7,19 @@ import {
 } from '@wangeditor-next/editor';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Form, Input, message, Modal } from 'antd';
+import {
+  Form,
+  GetProp,
+  Input,
+  message,
+  Modal,
+  Upload,
+  UploadProps,
+} from 'antd';
 import type { CreatePost, PostItem } from './type';
 import { create, update } from '@/service/modules/post';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { useUserStore } from '@/store/user';
 
 interface UseEditorType {
   visible: boolean;
@@ -46,6 +56,7 @@ const UseEditor: React.FC<UseEditorType> = ({
     try {
       const values = await form.validateFields();
       values.content = html;
+      values.cover = values.cover.file.response.data;
       if (editData) {
         console.log(editData);
         const { data } = await update(editData.id, values);
@@ -69,6 +80,54 @@ const UseEditor: React.FC<UseEditorType> = ({
     form.resetFields();
   };
 
+  const onClose = () => {
+    setImageUrl('');
+    form.resetFields();
+  };
+  // 上传封面
+  const [loading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string>();
+  type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
+
+  const getBase64 = (img: FileType, callback: (url: string) => void) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result as string));
+    reader.readAsDataURL(img);
+  };
+
+  const beforeUpload = (file: FileType) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('You can only upload JPG/PNG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error('Image must smaller than 2MB!');
+    }
+    return isJpgOrPng && isLt2M;
+  };
+
+  const handleChange: UploadProps['onChange'] = (info) => {
+    if (info.file.status === 'uploading') {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj as FileType, (url) => {
+        setLoading(false);
+        setImageUrl(url);
+      });
+    }
+  };
+
+  const uploadButton = (
+    <button style={{ border: 0, background: 'none' }} type="button">
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </button>
+  );
+
   // 及时销毁 editor ，重要！
   useEffect(() => {
     return () => {
@@ -81,7 +140,9 @@ const UseEditor: React.FC<UseEditorType> = ({
   useEffect(() => {
     if (editData) {
       setHtml(editData.content);
-      console.log(editData);
+      editData.cover = editData.cover.replaceAll('\\', '/');
+
+      setImageUrl(`http://localhost:9000/${editData.cover}`);
       form.setFieldsValue({ ...editData });
     }
   }, [editData]);
@@ -90,7 +151,7 @@ const UseEditor: React.FC<UseEditorType> = ({
     <>
       {contextHolder}
       <Modal
-        className=" overflow-hidden"
+        className="overflow-hidden"
         title="Basic Modal"
         closable
         destroyOnHidden
@@ -98,6 +159,7 @@ const UseEditor: React.FC<UseEditorType> = ({
         open={visible}
         onOk={handleOk}
         onCancel={handleCancel}
+        afterClose={onClose}
         width={{
           xxl: '70%',
         }}
@@ -119,6 +181,30 @@ const UseEditor: React.FC<UseEditorType> = ({
               rules={[{ required: true, message: '请输入文章概要!' }]}
             >
               <Input.TextArea />
+            </Form.Item>
+            <Form.Item
+              label="文章封面"
+              name="cover"
+              rules={[{ required: true, message: '请上传封面!' }]}
+            >
+              <Upload
+                name="file"
+                listType="picture-card"
+                className="avatar-uploader"
+                showUploadList={false}
+                action="http://localhost:9000/api/posts/upload"
+                headers={{
+                  Authorization: `Bearer ${useUserStore.getState().token}`,
+                }}
+                beforeUpload={beforeUpload}
+                onChange={handleChange}
+              >
+                {imageUrl ? (
+                  <img src={imageUrl} alt="cover" style={{ width: '100%' }} />
+                ) : (
+                  uploadButton
+                )}
+              </Upload>
             </Form.Item>
           </div>
         </Form>
@@ -166,3 +252,6 @@ const UseEditor: React.FC<UseEditorType> = ({
 };
 
 export default UseEditor;
+function setLoading(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}

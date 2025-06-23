@@ -1,5 +1,6 @@
 import {
   Button,
+  Image,
   Popconfirm,
   Table,
   TableColumnsType,
@@ -40,6 +41,23 @@ const PostTable = forwardRef<PostTableRef, PostTableProps>(
     }));
 
     const columns: TableColumnsType<TableColumns> = [
+      {
+        key: 'cover',
+        title: '封面',
+        dataIndex: 'cover',
+        align: 'center',
+        render: (_, record) => {
+          record.cover = record.cover.replaceAll('\\', '/');
+          console.log(record.cover.replaceAll('\\', '/'));
+          return (
+            <Image
+              src={`http://localhost:9000/${record.cover}`}
+              width={100}
+              height={100}
+            />
+          );
+        },
+      },
       {
         key: 'title',
         title: '文章标题',

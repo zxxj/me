@@ -22,6 +22,7 @@ export interface TableColumns {
   author: AuthorType;
   createdAt: Date;
   updatedAt: Date;
+  cover: string;
 }
 
 // 创建文章
@@ -29,6 +30,7 @@ export interface CreatePost {
   title: string;
   content: string;
   summary: string;
+  cover: string;
 }
 
 // 编辑文章
@@ -36,6 +38,7 @@ export interface UpdatePostDto {
   title: string;
   content: string;
   summary: string;
+  cover: string;
 }
 
 // 表格每一项item的类型
@@ -52,4 +55,5 @@ export interface PostItem {
   isPublished: boolean;
   createdAt: Date;
   updatedAt: Date;
+  cover: string;
 }
