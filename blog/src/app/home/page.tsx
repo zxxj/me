@@ -1,4 +1,4 @@
-import { list } from '@/app/service/modules/post/index';
+// import { list } from '@/app/service/modules/post/index';
 import PostList from './PostList'; // 引入客户端组件
 import { Post } from '../service/modules/post/type';
 
