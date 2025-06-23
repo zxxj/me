@@ -48,7 +48,6 @@ const PostTable = forwardRef<PostTableRef, PostTableProps>(
         align: 'center',
         render: (_, record) => {
           record.cover = record.cover.replaceAll('\\', '/');
-          console.log(record.cover.replaceAll('\\', '/'));
           return (
             <Image
               src={`http://localhost:9000/${record.cover}`}
