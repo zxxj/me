@@ -23,6 +23,9 @@ export class Post {
   @Column({ length: 500, nullable: true })
   summary: string;
 
+  @Column()
+  cover: string;
+
   @Column({ default: 0 })
   viewCount: number;
 

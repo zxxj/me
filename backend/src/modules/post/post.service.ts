@@ -41,6 +41,7 @@ export class PostService {
       summary: post.summary,
       content: post.content,
       commentCount: post.commentCount,
+      cover: post.cover,
       likeCount: post.likeCount,
       viewCount: post.viewCount,
       isPublished: post.isPublished,
@@ -75,6 +76,7 @@ export class PostService {
       likeCount: post.likeCount,
       viewCount: post.viewCount,
       isPublished: post.isPublished,
+      cover: post.cover,
       author: {
         username: post.author.username,
         email: post.author.email,

@@ -27,4 +27,8 @@ export class CreatePostDto {
   @IsBoolean()
   @IsOptional()
   isPublished?: boolean;
+
+  @IsString()
+  @IsNotEmpty()
+  cover: string;
 }

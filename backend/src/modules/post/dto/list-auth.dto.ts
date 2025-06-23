@@ -11,6 +11,7 @@ export interface PostVo {
   content: string;
   author_id: number;
   commentCount: number;
+  cover: string;
   likeCount: number;
   viewCount: number;
   isPublished: boolean;
