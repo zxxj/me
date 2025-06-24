@@ -26,26 +26,6 @@ const containerVariants: Variants = {
 };
 
 const Wrapper: FC = () => {
-  const data = [
-    {
-      cover: '/projects/收费站.png',
-    },
-    {
-      cover: '/projects/智慧小区.png',
-    },
-    {
-      cover: '/projects/粮仓.png',
-    },
-    {
-      cover: '/projects/机械.png',
-    },
-    {
-      cover: '/projects/车.png',
-    },
-    {
-      cover: '/projects/xinDesign.png',
-    },
-  ];
   return (
     <motion.div
       variants={containerVariants}
@@ -53,18 +33,8 @@ const Wrapper: FC = () => {
       animate="visible"
       className="border dark:text-white  overflow-y-auto opacity-90 h-[67vh] lg:h-[80vh] w-11/12 m-auto shadow-md shadow-black dark:shadow-white rounded-2xl  p-4 space-y-2 xl:w-full"
     >
-      <div className="flex flex-wrap justify-around gap-y-4 ">
-        {data.map((item) => (
-          <SpotlightCard key={item.cover}>
-            <Image
-              src={item.cover}
-              alt="收费站"
-              width={500}
-              height={100}
-              className="w-full h-auto rounded-md"
-            />
-          </SpotlightCard>
-        ))}
+      <div className="flex flex-wrap justify-start gap-y-4 ">
+        <SpotlightCard></SpotlightCard>
       </div>
     </motion.div>
   );

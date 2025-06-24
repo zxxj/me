@@ -13,7 +13,7 @@ export const categories = [
   },
   {
     icon: <ShapesIcon />,
-    name: '技术文章',
+    name: '文章分类',
     path: '/category',
   },
   {

@@ -8,7 +8,7 @@ import {
   XMarkIcon,
   SunIcon,
 } from '@heroicons/react/24/solid';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
